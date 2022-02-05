@@ -3,5 +3,10 @@ export interface IReduxStore {
         past: [],
         present: { count: number},
         future: []
+    },
+    todos: {
+        past: [],
+        present: [],
+        future: []
     }
 }

@@ -16,3 +16,9 @@ export const counterReducer = (state: any = initialState.counter, action: AnyAct
         default: return state
     }
 }
+
+export const todoReducer = (state = initialState.todos, action: AnyAction) => {
+    switch (action.type) {
+        default: return state
+    }
+}
