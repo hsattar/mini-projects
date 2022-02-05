@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { IReduxStore } from "../types";
-import { INCREASE_COUNTER, DECREASE_COUNTER } from "./actions";
+import { INCREASE_COUNTER, DECREASE_COUNTER, ADD_TODO_ITEM } from "./actions";
 import { initialState } from "./store";
 
 export const counterReducer = (state: any = initialState.counter, action: AnyAction) => {    
@@ -17,8 +17,12 @@ export const counterReducer = (state: any = initialState.counter, action: AnyAct
     }
 }
 
-export const todoReducer = (state = initialState.todos, action: AnyAction) => {
+export const todoReducer = (state: any = initialState.todos, action: AnyAction) => {
     switch (action.type) {
+        case ADD_TODO_ITEM: return {
+            ...state,
+            tasks: [...state.tasks, action.payload]
+        }
         default: return state
     }
 }

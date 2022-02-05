@@ -6,12 +6,16 @@ import undoable from "redux-undo"
 export const initialState: IReduxStore = {
     counter: {
         past: [],
-        present: { count: 0},
+        present: { 
+            count: 0
+        },
         future: []
     },
     todos: {
         past: [],
-        present: [],
+        present: {
+            tasks: []
+        },
         future: []
     }
 }   

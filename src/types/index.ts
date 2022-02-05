@@ -6,7 +6,14 @@ export interface IReduxStore {
     },
     todos: {
         past: [],
-        present: [],
+        present: {
+            tasks: ITodoTask[]
+        },
         future: []
     }
+}
+
+export interface ITodoTask {
+    name: string
+    description: string
 }
