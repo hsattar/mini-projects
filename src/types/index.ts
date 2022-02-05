@@ -1,5 +1,7 @@
 export interface IReduxStore {
     counter: {
-        count: number
+        past: [],
+        present: { count: number},
+        future: []
     }
 }
