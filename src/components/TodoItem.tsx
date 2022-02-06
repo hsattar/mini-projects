@@ -1,16 +1,7 @@
-interface Props {
-    name: string
-    description: string
-    index: number
-}
-
-export default function TodoItem({ name, description, index }: Props) {
+export default function TodoItem() {
     return (
         <>
-            <h4>Task {index + 1}</h4>
-            <h4>{name}</h4>
-            <h6>{description}</h6>
-            <hr />
+            
         </>
     )
 }
