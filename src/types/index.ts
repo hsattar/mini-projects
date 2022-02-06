@@ -7,13 +7,13 @@ export interface IReduxStore {
     todos: {
         past: [],
         present: {
-            tasks: ITodoTask[]
+            tasks: ITodoTask[] | []
         },
         future: []
     }
 }
 
 export interface ITodoTask {
-    name: string
-    description: string
+    name?: string
+    description?: string
 }
