@@ -1,9 +1,10 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, User, UserCredential } from "firebase/auth"
-import { FC, ReactNode, useContext, useEffect, useState } from "react"
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, User, UserCredential, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import { ReactNode, useContext, useEffect, useState } from "react"
 import { createContext } from "react"
 import { auth } from "../firebase"
 
 type userCredentialPromise = (email: string, password: string) => Promise<UserCredential>
+type userPromise = () => Promise<User>
 type voidPromise = () => Promise<void>
 
 interface IAuthContext {
@@ -11,6 +12,7 @@ interface IAuthContext {
     login: userCredentialPromise | null
     signup: userCredentialPromise | null
     logout: voidPromise | null
+    googleLogin: userPromise | null
 }
 
 interface Props {
@@ -21,7 +23,8 @@ const contextDefaultValues: IAuthContext = {
     currentUser: null,
     login: null,
     signup: null,
-    logout: null
+    logout: null,
+    googleLogin: null
 }
 
 const AuthContext = createContext<IAuthContext>(contextDefaultValues)
@@ -43,6 +46,16 @@ export const AuthProvider = ({ children }: Props) => {
 
     const logout = () => signOut(auth)
 
+    const googleProvider = new GoogleAuthProvider()
+
+    const googleLogin = async () => {
+        const result = await signInWithPopup(auth, googleProvider)
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = credential?.accessToken
+        const user = result.user
+        return user
+    }
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
             setCurrentUser(user)
@@ -56,7 +69,8 @@ export const AuthProvider = ({ children }: Props) => {
         currentUser,
         login,
         signup,
-        logout
+        logout,
+        googleLogin
     }
 
     return (

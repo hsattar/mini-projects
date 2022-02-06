@@ -19,5 +19,6 @@ const app = initializeApp({
   appId: REACT_APP_appId
 })
 
-export const auth = getAuth(app) 
+export const auth = getAuth(app)
+auth.useDeviceLanguage() 
 export default app

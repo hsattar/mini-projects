@@ -1,24 +1,22 @@
 import { Form, Button, Container } from 'react-bootstrap'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
-export default function Login() {
+export default function Register() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
     
-    const { login } = useAuth()
+    const { signup } = useAuth()
     const navigate = useNavigate()
 
-    const handleSubmit = async e => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         try {
             setLoading(true)
-            await login(email, password)
-            setEmail('')
-            setPassword('')
+            await signup!(email, password)
             navigate('/')
         } catch (error) {
             console.log(error)
@@ -30,7 +28,7 @@ export default function Login() {
     return (
         <Container className="d-flex flex-column justify-content-center align-items-center w-50" style={{ minHeight: "100vh"}}>
             <Form onSubmit={handleSubmit} className="w-100 border p-4">
-                <h2>Login</h2>
+                <h2>Register</h2>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
@@ -41,8 +39,8 @@ export default function Login() {
                     <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                 </Form.Group>
 
-                <Button variant="primary" disabled={loading} className="w-100" type="submit">Login</Button>
-                <Link to='/register' className="mt-3">Register</Link>
+                <Button variant="primary" disabled={loading} className="w-100" type="submit">Register</Button>
+                <Link to='/login' className="mt-3">Login</Link>
             </Form>
         </Container>
     )

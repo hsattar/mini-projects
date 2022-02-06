@@ -9,8 +9,7 @@ export default function Index() {
 
   const handleLogout = async () => {
     try {
-      await logout()
-      console.log('signed out')
+      await logout!()
       navigate('/login')
     } catch (error) {
       console.log('failed to sign out',error)
