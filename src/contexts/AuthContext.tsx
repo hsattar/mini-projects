@@ -59,8 +59,10 @@ export const AuthProvider = ({ children }: Props) => {
         logout
     }
 
-    // return (
-    //     <h1></h1>
-    // )
+    return (
+        <AuthContext.Provider value={value}>
+            {!loading && children}
+        </AuthContext.Provider>
+    )
 
 }

@@ -18,9 +18,9 @@ export default function Index() {
   }
 
   return (
-    <Container>
-      <h2>Index</h2>
-      <h2>{currentUser.email}</h2>
+    <Container className='mt-5'>
+      {JSON.stringify(currentUser)}
+      <br /><br />
       <Button variant="danger" onClick={handleLogout}>Logout</Button>
     </Container>
   )
