@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { DragDropContext } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import initialdata from './data'
 import Container from './Container'
 
@@ -8,10 +8,22 @@ export default function App() {
   const [data, setData] = useState(initialdata) 
 
   const handleOnDragEnd = (result: any) => {
-    const { source, destination, draggableId } = result
+    const { source, destination, draggableId, type } = result
 
     if (!destination) return
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
+
+    if (type === 'container') {
+      const newColumnOrder = [...data.containerOrder]
+      newColumnOrder.splice(source.index, 1)
+      newColumnOrder.splice(destination.index, 0, draggableId)
+      
+      setData({
+        ...data,
+        containerOrder: newColumnOrder
+      })
+      return
+    }
 
     const start = data.containers.find(contain => contain.id === source.droppableId)
     const finish = data.containers.find(contain => contain.id === destination.droppableId)
@@ -63,14 +75,22 @@ export default function App() {
   }
 
   return (
-    <DragDropContext
-      onDragEnd={handleOnDragEnd}
-    >
-    { data.containerOrder.map(containerId => {
-      const container = data.containers.find(contain => contain.id === containerId)
-      const elements = container?.elementIds.map(elem1 => data.elements.find(elem => elem.id === elem1) )
-      return <Container key={container?.id} container={container} elements={elements} />
-    }) }
+    <DragDropContext onDragEnd={handleOnDragEnd} >
+      <Droppable droppableId="all-containers" type="container">
+        {(provided) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
+          { data.containerOrder.map((containerId, idx) => {
+            const container = data.containers.find(contain => contain.id === containerId)
+            const elements = container?.elementIds.map(elem1 => data.elements.find(elem => elem.id === elem1) )
+            return <Container key={container?.id} container={container} elements={elements} idx={idx} />
+          }) }
+          {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </DragDropContext>
   )
 }
