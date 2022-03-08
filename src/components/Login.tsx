@@ -50,6 +50,7 @@ export default function Login() {
                 <Link to='/register' className="mt-3">Register</Link>
             </Form>
                 <Button className='w-100 mt-3' onClick={handleGoogleLogin}>Login With Google</Button>
+                <Button className='w-100 mt-3'>Login With Phone Number</Button>
         </Container>
     )
 }
