@@ -1,3 +1,4 @@
+import { Droppable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 import Element from './Element'
 
@@ -23,9 +24,17 @@ export default function Container({ container, elements }: IProps) {
     return (
         <ContainerDiv>
             <Title>{container?.title}</Title>
-            <ElementList>
-                {elements?.map(elem => <Element key={elem?.id} element={elem} />)}
-            </ElementList>
+            <Droppable droppableId={container?.id!}>
+                {(provided) => (
+                <ElementList
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                >
+                    {elements?.map((elem, idx) => <Element key={elem?.id} element={elem} idx={idx} />)}
+                    {provided.placeholder}
+                </ElementList>
+                )}
+            </Droppable>
         </ContainerDiv>
     )
 }

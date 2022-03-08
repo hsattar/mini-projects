@@ -8,6 +8,11 @@ export default function App() {
   const [data, setData] = useState(initialdata) 
 
   const handleOnDragEnd = (result: any) => {
+    const { source, destination, draggableId } = result
+
+    if (!destination) return
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return
+
     
   }
 

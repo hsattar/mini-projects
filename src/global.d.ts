@@ -14,3 +14,16 @@ interface IElement {
     id: string
     text: string
 }
+
+interface IDragEndResult {
+    draggableId: string
+    type: string
+    reason: 'DROP' | 'CANCELLED'
+    source: IResultSrcDest
+    destination: IResultSrcDest
+}
+
+interface IResultSrcDest {
+    droppableId: string
+    index: number
+}
