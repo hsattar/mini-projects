@@ -13,7 +13,25 @@ export default function App() {
     if (!destination) return
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
 
-    
+    const container = data.containers.find(contain => contain.id === source.droppableId)
+    const newElementIds = [...container?.elementIds!]
+    newElementIds.splice(source.index, 1)
+    newElementIds.splice(destination.index, 0, draggableId)
+
+    const newContainer = {
+      ...container,
+      elementIds: newElementIds
+    }
+
+    const containerIndex = data.containers.findIndex(contain => contain.id === source.droppableId)
+
+    data.containers[containerIndex] = newContainer
+
+    setData({
+      ...data,
+      containers: data.containers
+    })
+
   }
 
   return (

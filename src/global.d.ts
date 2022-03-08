@@ -5,13 +5,13 @@ interface IData {
 }
 
 interface IContainer {
-    id: string
-    title: string
+    id?: string 
+    title?: string
     elementIds: string[]
 }
 
 interface IElement {
-    id: string
+    id: string 
     text: string
 }
 
