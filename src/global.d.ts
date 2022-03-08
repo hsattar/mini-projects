@@ -15,15 +15,31 @@ interface IElement {
     text: string
 }
 
-interface IDragEndResult {
+interface IDragStart {
     draggableId: string
     type: string
+    source: IResultSrcDest | null
+}
+
+interface IDragUpdate extends IDragStart {
+    destination: IResultSrcDest | null
+}
+
+interface IDragEndResult extends IDragUpdate{
     reason: 'DROP' | 'CANCELLED'
-    source: IResultSrcDest
-    destination: IResultSrcDest
 }
 
 interface IResultSrcDest {
     droppableId: string
     index: number
+}
+
+interface IDragSnapshot {
+    isDragging: boolean
+    draggingOver: string | null
+}
+
+interface IDropSnapshot {
+    isDraggingOver: boolean
+    draggingOverWidth: string | null
 }

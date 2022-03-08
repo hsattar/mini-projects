@@ -18,10 +18,19 @@ const initialdata: IData = {
             id: 'root',
             title: 'root',
             elementIds: ['h1', 'p', 'img']
+        },
+        {
+            id: 'grid-1',
+            title: 'grid 1',
+            elementIds: []
+        },
+        {
+            id: 'grid-2',
+            title: 'grid 2',
+            elementIds: []
         }
-    
     ],
-    containerOrder: ['root']
+    containerOrder: ['root', 'grid-1', 'grid-2']
 }
 
 export default initialdata

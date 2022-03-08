@@ -13,19 +13,47 @@ export default function App() {
     if (!destination) return
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
 
-    const container = data.containers.find(contain => contain.id === source.droppableId)
-    const newElementIds = [...container?.elementIds!]
-    newElementIds.splice(source.index, 1)
-    newElementIds.splice(destination.index, 0, draggableId)
+    const start = data.containers.find(contain => contain.id === source.droppableId)
+    const finish = data.containers.find(contain => contain.id === destination.droppableId)
+    const startContainerIndex = data.containers.findIndex(contain => contain.id === source.droppableId)
 
-    const newContainer = {
-      ...container,
-      elementIds: newElementIds
+    if (start === finish) {
+      const newElementIds = [...start?.elementIds!]
+      newElementIds.splice(source.index, 1)
+      newElementIds.splice(destination.index, 0, draggableId)
+  
+      const newContainer = {
+        ...start,
+        elementIds: newElementIds
+      }
+    
+      data.containers[startContainerIndex] = newContainer
+  
+      setData({
+        ...data,
+        containers: data.containers
+      })
+      return
     }
 
-    const containerIndex = data.containers.findIndex(contain => contain.id === source.droppableId)
+    const startElementIds = [...start?.elementIds!]
+    startElementIds.splice(source.index, 1)
+    const finishElementIds = [...finish?.elementIds!]
+    finishElementIds.splice(destination.index, 0, draggableId)
+    const finishContainerIndex = data.containers.findIndex(contain => contain.id === destination.droppableId)
 
-    data.containers[containerIndex] = newContainer
+    const newStartContainer = {
+      ...start,
+      elementIds: startElementIds
+    }
+
+    const newFinishContainer = {
+      ...finish,
+      elementIds: finishElementIds
+    }
+
+    data.containers[startContainerIndex] = newStartContainer
+    data.containers[finishContainerIndex] = newFinishContainer
 
     setData({
       ...data,
