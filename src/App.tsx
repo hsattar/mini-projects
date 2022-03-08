@@ -1,26 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+import initialdata from './data'
+import Container from './Container'
 
-function App() {
+export default function App() {
+
+  const [data, setData] = useState(initialdata) 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+    { data.containerOrder.map(containerId => {
+      const container = data.containers.find(contain => contain.id === containerId)
+      const elements = container?.elementIds.map(elem1 => data.elements.find(elem => elem.id === elem1) )
+      return <Container key={container?.id} container={container} elements={elements} />
+    }) }
+    </>
+  )
 }
-
-export default App;
